@@ -10,26 +10,42 @@ html = urllib2.urlopen("https://app.wodify.com/Schedule/PublicCalendarListView.a
 soup = BeautifulSoup(html,"lxml")
 
 
+
 table = soup.find('table', attrs={'class': 'TableRecords'})
 table_body = table.find('tbody')
 
+FinalData = []
+
 for row in table_body.find_all("tr"):
     for stat in row.find_all("td", attrs={'class':['TableRecords_EvenLine', 'TableRecords_OddLine']}):
-        #print("val of stat:",stat)
-        #for text in stat:
+        dictContent ={}
         for spn in stat.find_all("span"):
-            #print("spn val:",spn)
             if spn.has_attr("title"):
                 if 'Olympic Weightlifting' in spn["title"]:
-                    print(spn["title"])
+                    if re.match(r'^[0-9]', spn["title"][0]):
+                            dictContent["Title"] = str(spn["title"])
                 elif 'CrossFit' in spn["title"]:
-                    print(spn["title"])
+                    if re.match(r'^[0-9]', spn["title"][0]):
+                        dictContent["Title"] = str(spn["title"])
                 elif 'Open Gym' in spn["title"]:
-                    print(spn["title"])
+                    if re.match(r'^[0-9]', spn["title"][0]):
+                        dictContent["Title"] = str(spn["title"])
                 elif 'Athletic Conditioning' in spn["title"]:
-                    print(spn["title"])
+                    if re.match(r'^[0-9]', spn["title"][0]):
+                        dictContent["Title"] = str(spn["title"])
+        if len(dictContent) >0:
+            FinalData.append(dictContent)
+
+
+print("THe final data is:", FinalData)
+
+
+'''               
             elif spn.has_attr("class"):
                 if 'h3' in spn["class"]:
                     print(spn.contents)
             elif spn.has_attr("style"):
                 print(spn.text)
+
+                '''
+
