@@ -6,14 +6,6 @@ from prettytable import PrettyTable
 x = PrettyTable()
 
 
-'''
-x.field_names = ["City name", "Area", "Population", "Annual Rainfall"]
-x.add_row(["Adelaide",1295, 1158259, 600.5])
-
-print x.get_string(fields=["City name", "Population"])
-
-'''
-
 html = urllib2.urlopen("https://app.wodify.com/Schedule/PublicCalendarListView.aspx?tenant=3920").read()
 soup = BeautifulSoup(html,"lxml")
 
